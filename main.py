@@ -26,6 +26,10 @@ class Calc:
     def __init__(self, line):
         self.line = line
         self.__pattern_matching(line)
+        self.list = []
+        for i in self.line:
+            self.list.append(i) # 문장 들어온거 리스트로 몽땅 집어넣고
+                                #리스트에 들어온거 에서 ( ) 이거 판별합시다.
 
     def __pattern_matching(self,line):
         for i in range(len(line)): # (3+5)/2
