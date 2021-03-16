@@ -1,3 +1,5 @@
+import unittest
+
 
 class Stack:
     def __init__(self):
@@ -12,24 +14,24 @@ class Stack:
     def pop(self):
         n = len(self.stack)
         temp = ""
-        if n!=0:
-            temp = self.stack[n-1]
-            del self.stack[n-1]
+        if n != 0:
+            temp = self.stack[n - 1]
+            del self.stack[n - 1]
         return temp
 
     def clear(self):
-        self.stack=[]
+        self.stack = []
 
     def peek(self):
         n = len(self.stack)
         if n > 0:
-            return self.stack[n-1]
+            return self.stack[n - 1]
 
     def stack_print(self):
         n = len(self.stack)
         if n > 0:
             for i in range(0, n):
-                print(self.stack[n-1-i])
+                print(self.stack[n - 1 - i])
 
 
 class Calc:
@@ -37,9 +39,8 @@ class Calc:
         self.line = line
         calc_stack = Stack()
 
-        #아래 괄호검사로 함수화
-        self.syn_error = False # 왜 쓰는건지 이해하고 쓰자
-        for ch in line: #괄호검사
+        self.syn_error = False  # 왜 쓰는건지 이해하고 쓰자
+        for ch in line:  # 괄호검사
             if ch == "(":
                 calc_stack.push("(")
             elif ch == ")":
@@ -50,7 +51,7 @@ class Calc:
         if calc_stack.is_empty() == False:
             self.syn_error = True
 
-    def get_post_calc(self): #후위연산으로 변경
+    def get_post_calc(self):  # 후위연산으로 변경
         calc_stack2 = Stack()
         tokens = self.line
         post_fix = ""
@@ -59,14 +60,14 @@ class Calc:
             if ch == "(":
                 calc_stack2.push(ch)
             elif ch == ")":
-                while(True):
+                while (True):
                     temp = calc_stack2.pop()
                     if temp != "(":
                         post_fix += temp + " "
                     else:
                         break
             elif ch == "+" or ch == "-":
-                while(True):
+                while (True):
                     if self.operator_yn(calc_stack2.peek()) == True:
                         post_fix += calc_stack2.pop() + " "
                     else:
@@ -82,10 +83,10 @@ class Calc:
             else:
                 post_fix += ch + " "
 
-        while(calc_stack2.is_empty() != True):
+        while (calc_stack2.is_empty() != True):
             post_fix += calc_stack2.pop() + " "
 
-        print(post_fix)
+        #print(post_fix)
 
         tokens = post_fix.split()
         calc_stack2.clear()
@@ -104,19 +105,12 @@ class Calc:
                 else:
                     calc_stack2.push(fst - sec)
 
-
         result = ""
-        while(calc_stack2.is_empty()!= True):
+        while (calc_stack2.is_empty() != True):
             result += str(calc_stack2.pop())
 
-        print(result)
+        #print(result)
         return result
-
-    # def __init__(self, line): #str로 input이 온다.
-    #     self.buffer = [] #버퍼를 만들어서 연산과정을 기록한다.
-    #     self.line = list(line) #list로 감싸서 하나하나 담는다.
-    #     self.__is_paranthesis() #괄호검사 -> 괄호 검사 후
-    #     result = self.__pattern_matching(self.line)
 
     def operator_yn(self, item):
         if item == "*":
@@ -130,19 +124,89 @@ class Calc:
         else:
             return False
 
-    def __pattern_matching(self, line):
+
+class TestCalc(unittest.TestCase):
+    def test_덧셈(self):
+        # given
+        x = "1+3"
+        c = Calc(x)
+
+        # when
+        x = c.get_post_calc()
+
+        # then
+        self.assertEqual(x, "4.0")
+
+    def test_뺄셈(self):
+        # given
+        x = "1-4"
+        c = Calc(x)
+        # when
+        x = c.get_post_calc()
+
+        # then
+        self.assertEqual(x, "-3.0")
+
+    def test_나눗셈(self):
+        # given
+        x = "2/4"
+        c = Calc(x)
+        # when
+        x = c.get_post_calc()
+
+        # then
+        self.assertEqual(x, "0.5")
+
+    def test_곱셈(self):
+        # given
+        x = "2*4"
+        c = Calc(x)
+        # when
+        x = c.get_post_calc()
+
+        # then
+        self.assertEqual(x, "8.0")
+
+    def test_두개이상연산(self):
+        # given
+        x = "2+2*4"
+        c = Calc(x)
+        # when
+        x = c.get_post_calc()
+
+        # then
+        self.assertEqual(x, "10.0")
+        #16을 띄우면 00raiseError 출력하게 합시다.
+
+
+    def test_괄호검사(self):
+        # given
+        x = "(2+4)/4"
+        c = Calc(x)
+        # when
+        x = c.get_post_calc()
+
+        # then
+        self.assertEqual(x, "1.5")
+
+
+    def _괄호_에러테스트(self):
+        # given
+        x = ")2+4)/4"
+        y = "(2+4/4"
+        c = Calc(x)
+        d = Calc(y)
+        # when
+        x = c.get_post_calc()
+        y = d.get_post_calc()
+
+        # then
+        #try catch가 잘 되는지
+        #self.assertEqual(x, "1.5")
+
+    def test_순서_에러테스트(self):
         pass
 
 
-    # def __is_paranthesis(self, line):
-    #     if "(" in line or ")":
-    #         try:
-    #         except:
-    #
-    #     else:
-
 if __name__ == "__main__":
-    x = input()  # 1+3 / 1 + 3 / 1      +     3 등 처리
-    x = list(x)
-    c = Calc(x)
-    print(c.get_post_calc())
+    unittest.main()
