@@ -35,88 +35,91 @@ class Stack:
 class Calc:
     def __init__(self, line):
         self.line = line
-        calc_stack = Stack()
+        # try:
+        #     self.syn_error = False
+        #     self.__is_parentheses(line) #parenth check first
+        #     #if self.syn_error == True:
+        #         #execption raise
+        #
+        # except: #오류가 발생한다면.
+        #     pass
 
-        #아래 괄호검사로 함수화
-        self.syn_error = False # 왜 쓰는건지 이해하고 쓰자
-        for ch in line: #괄호검사
+
+    def __is_paranthesis(self, line):
+        stack_for_parenth = Stack()
+        for ch in line:
             if ch == "(":
-                calc_stack.push("(")
+                stack_for_parenth.push("(")
             elif ch == ")":
-                if calc_stack.is_empty() == False:
-                    pop_ch = calc_stack.pop()
+                if stack_for_parenth.is_empty() == False:
+                    stack_for_parenth.pop()
                 else:
                     self.syn_error = True
-        if calc_stack.is_empty() == False:
+        if stack_for_parenth.is_empty() == False:
             self.syn_error = True
 
-    def get_post_calc(self): #후위연산으로 변경
-        calc_stack2 = Stack()
+
+    def get_post_calc(self):
+        stack_for_post_op = Stack()
         tokens = self.line
         post_fix = ""
 
         for ch in tokens:
             if ch == "(":
-                calc_stack2.push(ch)
+                stack_for_post_op.push(ch)
             elif ch == ")":
                 while(True):
-                    temp = calc_stack2.pop()
+                    temp = stack_for_post_op.pop()
                     if temp != "(":
                         post_fix += temp + " "
                     else:
                         break
             elif ch == "+" or ch == "-":
                 while(True):
-                    if self.operator_yn(calc_stack2.peek()) == True:
-                        post_fix += calc_stack2.pop() + " "
+                    if self.operator_yn(stack_for_post_op.peek()) == True:
+                        post_fix += stack_for_post_op.pop() + " "
                     else:
                         break
-                calc_stack2.push(ch)
+                stack_for_post_op.push(ch)
             elif ch == "*" or ch == "/":
                 while (True):
-                    if calc_stack2.peek() == "*" or calc_stack2.peek() == "/":
-                        post_fix += calc_stack2.pop() + " "
+                    if stack_for_post_op.peek() == "*" or stack_for_post_op.peek() == "/":
+                        post_fix += stack_for_post_op.pop() + " "
                     else:
                         break
-                calc_stack2.push(ch)
+                stack_for_post_op.push(ch)
             else:
                 post_fix += ch + " "
 
-        while(calc_stack2.is_empty() != True):
-            post_fix += calc_stack2.pop() + " "
+        while(stack_for_post_op.is_empty() != True):
+            post_fix += stack_for_post_op.pop() + " "
 
         print(post_fix)
 
         tokens = post_fix.split()
-        calc_stack2.clear()
+        stack_for_post_op.clear()
         for ch in tokens:
             if self.operator_yn(ch) == False:
-                calc_stack2.push(ch)
+                stack_for_post_op.push(ch)
             else:
-                sec = float(calc_stack2.pop())
-                fst = float(calc_stack2.pop())
+                sec = float(stack_for_post_op.pop())
+                fst = float(stack_for_post_op.pop())
                 if ch == "*":
-                    calc_stack2.push(fst * sec)
+                    stack_for_post_op.push(fst * sec)
                 elif ch == "/":
-                    calc_stack2.push(fst / sec)
+                    stack_for_post_op.push(fst / sec)
                 elif ch == "+":
-                    calc_stack2.push(fst + sec)
+                    stack_for_post_op.push(fst + sec)
                 else:
-                    calc_stack2.push(fst - sec)
+                    stack_for_post_op.push(fst - sec)
 
 
         result = ""
-        while(calc_stack2.is_empty()!= True):
-            result += str(calc_stack2.pop())
+        while(stack_for_post_op.is_empty()!= True):
+            result += str(stack_for_post_op.pop())
 
         print(result)
         return result
-
-    # def __init__(self, line): #str로 input이 온다.
-    #     self.buffer = [] #버퍼를 만들어서 연산과정을 기록한다.
-    #     self.line = list(line) #list로 감싸서 하나하나 담는다.
-    #     self.__is_paranthesis() #괄호검사 -> 괄호 검사 후
-    #     result = self.__pattern_matching(self.line)
 
     def operator_yn(self, item):
         if item == "*":
@@ -130,16 +133,14 @@ class Calc:
         else:
             return False
 
+    def __is_parentheses(self):
+        pass
+
+
     def __pattern_matching(self, line):
         pass
 
 
-    # def __is_paranthesis(self, line):
-    #     if "(" in line or ")":
-    #         try:
-    #         except:
-    #
-    #     else:
 
 if __name__ == "__main__":
     x = input()  # 1+3 / 1 + 3 / 1      +     3 등 처리

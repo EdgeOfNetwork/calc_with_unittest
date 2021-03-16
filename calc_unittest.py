@@ -157,6 +157,9 @@ class TestCalc(unittest.TestCase):
         # then
         self.assertEqual(x, "0.5")
 
+    def __zero_division(self):
+        pass
+
     def test_곱셈(self):
         # given
         x = "2*4"
@@ -206,6 +209,9 @@ class TestCalc(unittest.TestCase):
 
     def test_순서_에러테스트(self):
         pass
+
+
+
 
 
 if __name__ == "__main__":

@@ -169,6 +169,9 @@ def test_곱셈():
     # then
     assert x == "8.0"
 
+def __zero_division(self):
+    pass
+
 
 def test_두개이상연산():
     # given
