@@ -126,28 +126,30 @@ class Calc:
 
 
 class TestCalc(unittest.TestCase):
-    def test_덧셈(self):
+
+
+    def test_add(self):
         # given
         x = "1+3"
-        c = Calc(x)
-
+        c = c(x)
         # when
         x = c.get_post_calc()
 
         # then
         self.assertEqual(x, "4.0")
 
-    def test_뺄셈(self):
+    def test_minus(self):
         # given
         x = "1-4"
         c = Calc(x)
+
         # when
         x = c.get_post_calc()
 
         # then
         self.assertEqual(x, "-3.0")
 
-    def test_나눗셈(self):
+    def test_div(self):
         # given
         x = "2/4"
         c = Calc(x)
@@ -160,7 +162,7 @@ class TestCalc(unittest.TestCase):
     def __zero_division(self):
         pass
 
-    def test_곱셈(self):
+    def test_multi(self):
         # given
         x = "2*4"
         c = Calc(x)
@@ -170,7 +172,7 @@ class TestCalc(unittest.TestCase):
         # then
         self.assertEqual(x, "8.0")
 
-    def test_두개이상연산(self):
+    def test_more_than_two(self):
         # given
         x = "2+2*4"
         c = Calc(x)
@@ -182,7 +184,7 @@ class TestCalc(unittest.TestCase):
         #16을 띄우면 00raiseError 출력하게 합시다.
 
 
-    def test_괄호검사(self):
+    def test_parenth(self):
         # given
         x = "(2+4)/4"
         c = Calc(x)
@@ -193,7 +195,7 @@ class TestCalc(unittest.TestCase):
         self.assertEqual(x, "1.5")
 
 
-    def _괄호_에러테스트(self):
+    def _parenth_error(self):
         # given
         x = ")2+4)/4"
         y = "(2+4/4"
@@ -204,13 +206,10 @@ class TestCalc(unittest.TestCase):
         y = d.get_post_calc()
 
         # then
+        #fail이 나게끔 출력을 유도
+
         #try catch가 잘 되는지
         #self.assertEqual(x, "1.5")
-
-    def test_순서_에러테스트(self):
-        pass
-
-
 
 
 

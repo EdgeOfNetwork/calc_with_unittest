@@ -35,14 +35,12 @@ class Stack:
 class Calc:
     def __init__(self, line):
         self.line = line
-        # try:
-        #     self.syn_error = False
-        #     self.__is_parentheses(line) #parenth check first
-        #     #if self.syn_error == True:
-        #         #execption raise
-        #
-        # except: #오류가 발생한다면.
-        #     pass
+        try:
+            self.syn_error = False
+            if self.__is_parentheses(line):
+                self.get_post_calc()
+        except:
+            pass
 
 
     def __is_paranthesis(self, line):
@@ -52,11 +50,11 @@ class Calc:
                 stack_for_parenth.push("(")
             elif ch == ")":
                 if stack_for_parenth.is_empty() == False:
-                    stack_for_parenth.pop()
+                    stack_for_parenth.pop() #pop의 return을 보관할 필요가 있나?
                 else:
-                    self.syn_error = True
+                    return self.syn_error = True
         if stack_for_parenth.is_empty() == False:
-            self.syn_error = True
+            return self.syn_error = True
 
 
     def get_post_calc(self):
@@ -133,17 +131,9 @@ class Calc:
         else:
             return False
 
-    def __is_parentheses(self):
-        pass
-
-
-    def __pattern_matching(self, line):
-        pass
-
-
 
 if __name__ == "__main__":
-    x = input()  # 1+3 / 1 + 3 / 1      +     3 등 처리
+    x = input()  # 1+3 / 1 + 3 / 1 + 3 등 처리
     x = list(x)
     c = Calc(x)
     print(c.get_post_calc())

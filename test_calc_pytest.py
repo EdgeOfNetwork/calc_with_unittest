@@ -124,7 +124,7 @@ class Calc:
             return False
 
 
-def test_덧셈():
+def test_plus():
     # given
     x = "1+3"
     c = Calc(x)
@@ -136,22 +136,23 @@ def test_덧셈():
     assert x == "4.0"
 
 
-def test_뺄셈():
+def test_minus():
     # given
     x = "1-4"
     c = Calc(x)
+
     # when
     x = c.get_post_calc()
-    print(x)
 
     # then
     assert x == "-3.0"
 
 
-def test_나눗셈():
+def test_div():
     # given
     x = "2/4"
     c = Calc(x)
+
     # when
     x = c.get_post_calc()
 
@@ -159,24 +160,26 @@ def test_나눗셈():
     assert x == "0.5"
 
 
-def test_곱셈():
+def test_multi():
     # given
     x = "2*4"
     c = Calc(x)
+
     # when
     x = c.get_post_calc()
 
     # then
     assert x == "8.0"
 
-def __zero_division(self):
+def __zero_division():
     pass
 
 
-def test_두개이상연산():
+def test_more_than_two():
     # given
     x = "2+2*4"
     c = Calc(x)
+
     # when
     x = c.get_post_calc()
 
@@ -185,7 +188,7 @@ def test_두개이상연산():
     # 16을 띄우면 00raiseError 출력하게 합시다.
 
 
-def test_괄호검사(self):
+def test_check_paran():
     # given
     x = "(2+4)/4"
     c = Calc(x)
@@ -195,7 +198,7 @@ def test_괄호검사(self):
     # then
     assert x == "1.5"
 
-def _괄호_에러테스트(self):
+def _paren_error():
     # given
     x = ")2+4)/4"
     y = "(2+4/4"
@@ -206,11 +209,13 @@ def _괄호_에러테스트(self):
     y = d.get_post_calc()
 
     # then
+    
+    #에러처리 여부
     # try catch가 잘 되는지
     # self.assertEqual(x, "1.5")
 
 
-def test_순서_에러테스트(self):
+def _order():
     pass
 
 # if __name__ == "__main__":
