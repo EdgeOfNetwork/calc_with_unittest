@@ -14,8 +14,6 @@ x = "hello"
 assert x == "goodbye", "x should be 'hello'"
 
 
-
-
 """ assert 어떻게 쓰는지 보여준다. """
 #위에 지우면 아래가 돌아감을 보여줌
 
