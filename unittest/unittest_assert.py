@@ -1,5 +1,6 @@
 import unittest
 import calc_funcs
+unittest.TestLoader.sortTestMethodsUsing = None
 
 
 class TddTest(unittest.TestCase):
@@ -16,7 +17,7 @@ class TddTest(unittest.TestCase):
         self.assertTrue(bool_val)
 
     def test_div(self):
-        self.assertRaises(ZeroDivisionError, calc_funcs.div(4,0))
+        self.assertRaises(ZeroDivisionError, calc_funcs.div(4, 0))
 
     def test_mul(self):
         none_check = True
@@ -26,6 +27,7 @@ class TddTest(unittest.TestCase):
             none_check = None
 
         self.assertIsNone(none_check)
+
 
 if __name__ == "__main__":
     unittest.main

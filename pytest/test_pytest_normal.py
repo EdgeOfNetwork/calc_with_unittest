@@ -1,12 +1,17 @@
 import calc_funcs
 
+"""
+pytest를 실행해보면, 동작이 되었다는 측면만 강조된다.
+"""
+
 def test_add():
-    res = calc_funcs.add(5,3)
-    if res is 8 :
+    res = calc_funcs.add(5, 3)
+    if res is 8:
         print("add_passed")
 
+
 def test_sub():
-    res = calc_funcs.sub(5,3)
+    res = calc_funcs.sub(5, 3)
     if res > 0:
         bool_val = True
     else:
@@ -15,14 +20,15 @@ def test_sub():
     if bool_val is True:
         print('Sub passed')
 
+
 def test_div():
     try:
-        calc_funcs.div(4,0)
-    except Exception as e: #억지로 0으로 나눠보자
+        calc_funcs.div(4, 0)
+    except Exception as e:  # 억지로 0으로 나눠보자
         print(e)
 
+
 def test_mul():
-    res = calc_funcs.mul(5,3)
+    res = calc_funcs.mul(5, 3)
     if res < 100:
         print("test_mul error")
-
